@@ -1,0 +1,39 @@
+<div class="container">
+  <h2> Lets play Tic Tac Toe :)</h2>
+  <form [formGroup]="setupForm" (ngSubmit)="newGame()">
+    <div>
+      <label for="boardSize">
+        Board size
+      </label>
+      <input id="boardSize" min="2" type="number" formControlName="boardSize">
+    </div>
+  
+    <div>
+      <label for="countToWin">
+        Consecutive marks to win
+      </label>
+      <input id="countToWin" type="number" min="2" [max]="setupForm.value.boardSize" formControlName="countToWin">
+    </div>
+  
+    <button class="button" type="submit">New game</button>
+  
+  </form>
+  
+  <h2 *ngIf="!gameOver">Player <span [ngClass]="'player--' + player">{{ player }}</span></h2>
+  <div class="game-over" *ngIf="gameOver">
+    <h2>Game over</h2>
+    <span class="winner" *ngIf="winner">
+      <h3>The winner is <span [ngClass]="'player--' + winner">{{ winner }}</span></h3>
+    </span>
+    <h3 *ngIf="!winner">Draw</h3>
+  </div>
+  <div class="board">
+    <div class="row" *ngFor="let row of board; index as r">
+      <div class="cell" [ngClass]="'player--' + cell" *ngFor="let cell of row; index as c" (click)="play(r, c)">
+        {{ cell }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
